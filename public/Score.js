@@ -7,20 +7,33 @@ class Score {
   currentStageIndex = 0; //초기 스테이지 값
   currentScorePersecond = 0;
   stageInfo;
+  itemTable;
 
   constructor(ctx, scaleRatio, itemController) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.scaleRatio = scaleRatio;
     this.fetchStageInfo();
+    this.fetchItemInfo();
     this.itemController = itemController; //아이템 컨트롤러의 인스턴스 받아옴
+  }
+  async fetchItemInfo() {
+    try {
+      const response = await fetch('/item');
+      this.itemTable = await response.json();
+      console.log('아이템 테이블 가져오기 성공');
+    } catch (err) {
+      console.error('아이템 테이블 가져오기 실패');
+    }
   }
   async fetchStageInfo() {
     try {
       const response = await fetch('/stage');
       this.stageInfo = await response.json();
       this.currentScorePersecond = this.stageInfo.data[0].scorePerSecond;
-      console.log('스테이지 데이터 가져오기 성공:'+this.stageInfo.data.length);
+      console.log(
+        '스테이지 데이터 가져오기 성공:' + this.stageInfo.data.length
+      );
     } catch (err) {
       console.error('스테이지 데이터 가져오기 실패');
     }
@@ -43,7 +56,7 @@ class Score {
         this.currentScorePersecond =
           this.stageInfo.data[this.currentStageIndex].scorePerSecond;
         this.itemController.updateStage(
-          this.stageInfo.data[this.currentStageIndex+1].id
+          this.stageInfo.data[this.currentStageIndex + 1].id
         );
         console.log(
           '스테이지 이동함, 현재 초당 점수 배율 = ' + this.currentScorePersecond
@@ -59,8 +72,8 @@ class Score {
   }
 
   getItem(itemId) {
-    // 아이템 획득시 점수 변화
-    this.score += 100;
+    const earnItem = this.itemTable.data.find((index) => index.id == itemId);
+    this.score += earnItem.score;
   }
 
   reset() {

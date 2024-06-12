@@ -4,7 +4,6 @@ class ItemController {
   INTERVAL_MIN = 0;
   INTERVAL_MAX = 12000;
   nextInterval = null;
-  itemTable;
   itemUnlockTable;
   unlockedItems = [1];
   currentStage;
@@ -17,20 +16,11 @@ class ItemController {
     this.scaleRatio = scaleRatio;
     this.speed = speed;
     this.currentStage = 1001;
-    this.fetchItemInfo();
     this.fetchItemUnlockInfo();
 
     this.setNextItemTime();
   }
-  async fetchItemInfo() {
-    try {
-      const response = await fetch('/item');
-      this.itemTable = await response.json();
-      console.log('아이템 테이블 가져오기 성공');
-    } catch (err) {
-      console.error('아이템 테이블 가져오기 실패');
-    }
-  }
+
   async fetchItemUnlockInfo() {
     try {
       const response = await fetch('/item_unlock');
