@@ -1,7 +1,11 @@
 //게임 시작에 대한 핸들러
 
+import { clearStage } from "../models/stage.model.js";
+
 export const gameStart = (uuid, payload) => {
   const { stages } = getGameAssets();
+
+  clearStage(uuid);
   //stages 배열에서 0번째 = 첫번째 스테이지
   //시간정보를 바로 저장함. 하지만 원래는 그 어떤 정보도 서버에 저장하지 않음 =>클라 정보는 언제든지 변조될수 있기에
   setStage(uuid, stages.data[0].id, payload.timestamp);
@@ -10,7 +14,7 @@ export const gameStart = (uuid, payload) => {
   return { status: 'success' };
 };
 
-export const gameEnd = () => {
+export const gameEnd = (uuid, payload) => {
   //게임이 끝날당시 클라이언트는 서버 종료 타임스탬프와 총 점수를 줌
   const { timestamp: gameEndTime, score } = payload;
   //: 쓰면 이름바꿀수 있음
@@ -32,6 +36,7 @@ export const gameEnd = () => {
 
     const stageDuration = (stageEndTime - stage.timestamp) / 1000;
     totalScore += stageDuration; //1초당 1점
+    //나중에 과제로 스테이지 현황에 따라 점수가 달라지게 해야함
   });
 
   //점수와 타임스탬프 검증
@@ -40,8 +45,9 @@ export const gameEnd = () => {
     return { status: 'fail', messgae: '스코어 검증 실패' };
   }
 
-  //DB 에 저장한다고 가정하면
+  //점수 기록을 DB 에 저장한다고 가정하면
   //여기 부분에서 코드 구현하면 될듯
+  //setResult(userId,score,timestamp) 느낌
 
   return { status: 'success', message: 'game ended', score };
 };

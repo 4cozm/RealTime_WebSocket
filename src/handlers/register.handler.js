@@ -1,11 +1,11 @@
 //유저등록하는 핸들러?
-import { addUser } from '../models/user.model';
+import { addUser } from '../models/user.model.js';
 import { v4 as uuidv4 } from 'uuid';
-import { handleConnection, handleDisconnect, handlerEvent } from './helper';
+import { handleConnection, handleDisconnect, handlerEvent } from './helper.js';
 
-const registerHandler = () => {
-  io.on('connect', (socket) => {
-    //io.on은 서버에서 'connect'가 일어나는 모든 유저를 대상으로 이벤트 처리
+const registerHandler = (io) => {
+  io.on('connection', (socket) => {
+    //io.on은 서버에서 'connection'이 일어나는 모든 유저를 대상으로 이벤트 처리
     //유저관리니까 UUID나 소켓ID를 저장해줘야함
     //저장하는 저장소를 하나 만들던지 해야함
 

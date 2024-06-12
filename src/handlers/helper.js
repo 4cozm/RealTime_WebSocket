@@ -1,10 +1,10 @@
 //특정 기능을 하는건 아니지만 꼭필요한 함수
 
-import { CLIENT_VERSION } from '../constants';
-import { getGameAssets } from '../init/assets';
-import { setStage, getStage } from '../models/stage.model';
-import { getUser, removeUser } from '../models/user.model';
-import handlerMappings from './handlerMapping';
+import { CLIENT_VERSION } from '../constants.js';
+import { getGameAssets } from '../init/assets.js';
+import { setStage, getStage, createStage } from '../models/stage.model.js';
+import { getUser, removeUser } from '../models/user.model.js';
+import handlerMappings from './handlerMapping.js';
 
 export const handleDisconnect = (socket, uuid) => {
   removeUser(socket.id);
@@ -17,7 +17,6 @@ export const handleDisconnect = (socket, uuid) => {
 export const handleConnection = (socket, uuid) => {
   console.log(`새로운 유저 연결됨 ${uuid} 소켓아이디:${socket.id}`);
   console.log('현재 접속중 유저:', getUser());
-
 
   socket.emit('connection', { uuid });
 };

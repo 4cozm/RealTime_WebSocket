@@ -9,18 +9,18 @@ const server = createServer(app);
 const PORT = 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
 initSoket(server);
 
-
-server.listen(PORT,async () => {
+server.listen(PORT, async () => {
   console.log('서버가 3000포트에서 열렸습니다');
 
-  //파일 미리 로드
-  try{
-    const assets =await loadGameAssets();
+  //에셋 관련 파일 미리 로드
+  try {
+    const assets = await loadGameAssets();
     console.log(assets);
-  }catch(error){
+  } catch (error) {
     console.error(error);
   }
 });
