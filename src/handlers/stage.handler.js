@@ -24,9 +24,9 @@ export const moveStageHandler = (userId, payload) => {
   // 1초당 1점, 100점이상 다음스테이지 이동, 오차범위 5
   // 클라이언트와 서버 간의 통신 지연시간을 고려해서 오차범위 설정
   // elapsedTime 은 100 이상 105 이하 일 경우만 통과
-  if (elapsedTime < 100 || elapsedTime > 105) {
-    return { status: 'fail', message: 'Invalid elapsed time' };
-  }
+  // if (elapsedTime < 100 || elapsedTime > 105) {
+  //   return { status: 'fail', message: 'Invalid elapsed time' };
+  // }
 
   // 게임 에셋에서 다음 스테이지의 존재 여부 확인
   const { stages } = getGameAssets();

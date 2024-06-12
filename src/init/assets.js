@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 const basePath = path.join(__dirname, '../../assets');
 let gameAssets = {}; // 전역함수로 선언
 
-const readFileAsync = (filename) => {
+export const readFileAsync = (filename) => {
   return new Promise((resolve, reject) => {
     fs.readFile(path.join(basePath, filename), 'utf8', (err, data) => {
       if (err) {

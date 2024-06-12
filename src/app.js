@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import initSocket from './init/socket.js';
 import { loadGameAssets } from './init/assets.js';
+import {readFileAsync} from "./init/assets.js";
 
 const app = express();
 const server = createServer(app);
@@ -13,8 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 initSocket(server);
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello World</h1>');
+app.get('/stage', async (req, res) => {
+  try {
+    const data = await readFileAsync('stage.json');
+    res.json(data);
+  } catch (err) {
+    res.status(500).send('Error reading file');
+  }
 });
 
 server.listen(PORT, async () => {
