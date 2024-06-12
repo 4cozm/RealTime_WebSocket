@@ -1,46 +1,38 @@
-//특정 기능을 하는건 아니지만 꼭필요한 함수
-
+import { getUsers, removeUser } from '../models/user.model.js';
 import { CLIENT_VERSION } from '../constants.js';
-import { getGameAssets } from '../init/assets.js';
-import { setStage, getStage, createStage } from '../models/stage.model.js';
-import { getUser, removeUser } from '../models/user.model.js';
 import handlerMappings from './handlerMapping.js';
+import { createStage } from '../models/stage.model.js';
+
+export const handleConnection = (socket, userUUID) => {
+  console.log(`New user connected: ${userUUID} with socket ID ${socket.id}`);
+  console.log('Current users:', getUsers());
+
+  // 스테이지 빈 배열 생성
+  createStage(userUUID);
+
+  socket.emit('connection', { uuid: userUUID });
+};
 
 export const handleDisconnect = (socket, uuid) => {
-  removeUser(socket.id);
-  console.log('유저 연결이 해제되었습니다');
-  console.log('남은 유저수 ', getUser());
-};
-//uuid는 나중에 쓸일 있으므로 일단 놔둠
-
-//레지스터 핸들러에서 실행될 초기 스테이지 관련
-export const handleConnection = (socket, uuid) => {
-  console.log(`새로운 유저 연결됨 ${uuid} 소켓아이디:${socket.id}`);
-  console.log('현재 접속중 유저:', getUser());
-
-  socket.emit('connection', { uuid });
+  removeUser(socket.id); // 사용자 삭제
+  console.log(`User disconnected: ${socket.id}`);
+  console.log('Current users:', getUsers());
 };
 
-export const handlerEvent = (io, socket, data) => {
-  //커넥션이 이루어졌을때 호출
+export const handleEvent = (io, socket, data) => {
   if (!CLIENT_VERSION.includes(data.clientVersion)) {
-    socket.emit('response', {
-      status: 'fail',
-      message: '클라이언트 버전이 다릅니다',
-    });
+    socket.emit('response', { status: 'fail', message: 'Client version mismatch' });
     return;
-    //response는 임의로 지은거임 http랑은 조금 다름
   }
+
   const handler = handlerMappings[data.handlerId];
   if (!handler) {
-    socket.emit('response', { status: 'fail' });
+    socket.emit('response', { status: 'fail', message: 'Handler not found' });
     return;
   }
 
   const response = handler(data.userId, data.payload);
-
   if (response.broadcast) {
-    //모든 유저에게 보내려면 emit에 붙어있는 broadcast를 쓰면됨
     io.emit('response', 'broadcast');
     return;
   }

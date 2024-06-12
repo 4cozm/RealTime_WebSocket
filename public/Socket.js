@@ -3,7 +3,6 @@ import { CLIENT_VERSION } from './Constants.js';
 const socket = io('http://localhost:3000', {
   query: {
     clientVersion: CLIENT_VERSION,
-    //쿼리로 첫 연결때 클라이언트 정보를 보내줌(원래는 안되는데 기능이 있어서 추가한거라고 함)
   },
 });
 

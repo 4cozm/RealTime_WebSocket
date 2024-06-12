@@ -1,11 +1,10 @@
-import {Server as SocketIO} from 'socket.io';
+import { Server as SocketIO } from 'socket.io';
 import registerHandler from '../handlers/register.handler.js';
 
-export const initSoket = (server)=>{
-    const io = new SocketIO();
-    io.attach(server);
+const initSocket = (server) => {
+  const io = new SocketIO();
+  io.attach(server);
+  registerHandler(io);
+};
 
-    registerHandler(io);
-}
-
-export default initSoket;
+export default initSocket;

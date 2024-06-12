@@ -1,3 +1,5 @@
+import { sendEvent } from './Socket.js';
+
 class Score {
   score = 0;
   HIGH_SCORE_KEY = 'highScore';
@@ -10,16 +12,15 @@ class Score {
   }
 
   update(deltaTime) {
-    this.score += deltaTime * 0.001;//60프레임 기준인데 난 144프레임임..
-    // 점수가 100점 이상이 될 시 서버에 메세지 전송
+    this.score += deltaTime * 0.001;
     if (Math.floor(this.score) === 100 && this.stageChange) {
       this.stageChange = false;
       sendEvent(11, { currentStage: 1000, targetStage: 1001 });
-      //@과제일듯? 하드코딩 되어있음
     }
   }
 
   getItem(itemId) {
+    // 아이템 획득시 점수 변화
     this.score += 0;
   }
 
