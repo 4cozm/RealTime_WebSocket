@@ -1,13 +1,13 @@
 import { getGameAssets } from '../init/assets.js';
 import { clearStage, getStage, setStage } from '../models/stage.model.js';
-
+import { assets } from '../app.js';
 export const gameStart = (uuid, payload) => {
   const { stages } = getGameAssets();
   clearStage(uuid);
   setStage(uuid, stages.data[0].id, payload.timestamp);
   console.log('Stage:', getStage(uuid));
 
-  return { status: 'success' };
+  return { status: 'game start success' };
 };
 
 export const gameEnd = (uuid, payload) => {
@@ -44,4 +44,27 @@ export const gameEnd = (uuid, payload) => {
   // saveGameResult(userId, clientScore, gameEndTime);
   // 검증이 통과되면 게임 종료 처리
   return { status: 'success', message: 'Game ended successfully', score };
+};
+
+export const spawnItem =(uuid, payload) => {
+  try {
+    console.log('아이템 스폰 검증 실시');
+    const userUUID = parseInt(getStage(uuid)[0].id, 10); // 1스테이지 기준 1000 반환
+    const item_unlock = assets.itemUnlocks;
+    const stageInfo = item_unlock.data.find(
+      (index) => index.stage_id === userUUID
+    );
+    if (!stageInfo) {
+      return { status: 'fail', message: '찾을 수 없는 스테이지 정보입니다' };
+    }
+
+    if (!stageInfo.item_id.includes(payload.id)) {
+      return { status: 'fail', message: '정상적인 아이템 생성이 아닙니다' };
+    }
+
+    return { status: 'success', message: '정상적인 아이템 생성입니다' };
+  } catch (error) {
+    console.error(error.message);
+    return { status: 'error', message: '서버 오류가 발생했습니다' };
+  }
 };

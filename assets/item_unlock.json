@@ -1,12 +1,13 @@
 {
-    "name": "item_unlock",
-    "version": "1.0.0",
-    "data": [
-      { "id":  101, "stage_id": 1001, "item_id": [1] },
-      { "id":  102, "stage_id": 1002, "item_id": [1,2] },
-      { "id":  103, "stage_id": 1003, "item_id": [1,2,3] },
-      { "id":  104, "stage_id": 1004, "item_id": [2,3,4] },
-      { "id":  105, "stage_id": 1005, "item_id": [3,4,5] },
-      { "id":  106, "stage_id": 1006, "item_id": [4,5,6] }
-    ]
-  }
+  "name": "item_unlock",
+  "version": "1.0.0",
+  "data": [
+    { "id": 101, "stage_id": 1000, "item_id": [1] },
+    { "id": 102, "stage_id": 1001, "item_id": [1, 2] },
+    { "id": 103, "stage_id": 1002, "item_id": [1, 2, 3] },
+    { "id": 104, "stage_id": 1003, "item_id": [2, 3, 4] },
+    { "id": 105, "stage_id": 1004, "item_id": [3, 4, 5] },
+    { "id": 106, "stage_id": 1005, "item_id": [4, 5, 6] },
+    { "id": 107, "stage_id": 1006, "item_id": [6] }
+  ]
+}

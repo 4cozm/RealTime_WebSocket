@@ -1,4 +1,5 @@
 import Item from './Item.js';
+import { sendEvent } from './Socket.js';
 
 class ItemController {
   INTERVAL_MIN = 0;
@@ -74,7 +75,7 @@ class ItemController {
       itemInfo.height,
       itemInfo.image
     );
-
+    sendEvent(20,{id:itemInfo.id});
     this.items.push(item);
   }
 
