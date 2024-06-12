@@ -8,20 +8,21 @@ class Score {
   currentScorePersecond = 0;
   stageInfo;
 
-  constructor(ctx, scaleRatio) {
+  constructor(ctx, scaleRatio, itemController) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.scaleRatio = scaleRatio;
     this.fetchStageInfo();
+    this.itemController = itemController; //아이템 컨트롤러의 인스턴스 받아옴
   }
   async fetchStageInfo() {
     try {
       const response = await fetch('/stage');
       this.stageInfo = await response.json();
       this.currentScorePersecond = this.stageInfo.data[0].scorePerSecond;
-      console.log('스테이지 데이터 가져오기 성공');
-    } catch (e) {
-      console.error('스테이지 데이터 가져오기 실패', e);
+      console.log('스테이지 데이터 가져오기 성공:'+this.stageInfo.data.length);
+    } catch (err) {
+      console.error('스테이지 데이터 가져오기 실패');
     }
   }
 
@@ -41,6 +42,9 @@ class Score {
         //4. 스테이지별 알맞는 점수 배율을 적용
         this.currentScorePersecond =
           this.stageInfo.data[this.currentStageIndex].scorePerSecond;
+        this.itemController.updateStage(
+          this.stageInfo.data[this.currentStageIndex+1].id
+        );
         console.log(
           '스테이지 이동함, 현재 초당 점수 배율 = ' + this.currentScorePersecond
         );

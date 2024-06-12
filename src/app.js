@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 initSocket(server);
 
-app.get('/stage', async (req, res) => {
+app.get('/:fileName', async (req, res) => {
   try {
-    const data = await readFileAsync('stage.json');
+    const data = await readFileAsync(`${req.params.fileName}.json`);
     res.json(data);
   } catch (err) {
     res.status(500).send('Error reading file');

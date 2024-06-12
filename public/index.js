@@ -35,12 +35,14 @@ const CACTI_CONFIG = [
   { width: 68 / 1.5, height: 70 / 1.5, image: 'images/cactus_3.png' },
 ];
 
-// 아이템
+//포켓볼이 아니라 몬스터볼 아닌가요?
 const ITEM_CONFIG = [
   { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/items/pokeball_red.png' },
   { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_yellow.png' },
   { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_purple.png' },
   { width: 50 / 1.5, height: 50 / 1.5, id: 4, image: 'images/items/pokeball_cyan.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 5, image: 'images/items/pokeball_orange.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 6, image: 'images/items/pokeball_pink.png' }
 ];
 
 // 게임 요소들
@@ -49,6 +51,7 @@ let ground = null;
 let cactiController = null;
 let itemController = null;
 let score = null;
+let currentStage = 0;
 
 let scaleRatio = null;
 let previousTime = null;
@@ -105,8 +108,9 @@ function createSprites() {
 
   itemController = new ItemController(ctx, itemImages, scaleRatio, GROUND_SPEED);
 
-  score = new Score(ctx, scaleRatio);
+  score = new Score(ctx, scaleRatio,itemController);
 }
+
 
 function getScaleRatio() {
   const screenHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
