@@ -74,6 +74,7 @@ class Score {
   getItem(itemId) {
     const earnItem = this.itemTable.data.find((index) => index.id == itemId);
     this.score += earnItem.score;
+    sendEvent(21,{id:itemId,score:earnItem.score});
   }
 
   reset() {

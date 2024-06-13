@@ -46,9 +46,8 @@ export const gameEnd = (uuid, payload) => {
   return { status: 'success', message: 'Game ended successfully', score };
 };
 
-export const spawnItem =(uuid, payload) => {
+export const spawnItem = (uuid, payload) => {
   try {
-    console.log('아이템 스폰 검증 실시');
     const userUUID = parseInt(getStage(uuid)[0].id, 10); // 1스테이지 기준 1000 반환
     const item_unlock = assets.itemUnlocks;
     const stageInfo = item_unlock.data.find(
@@ -67,4 +66,23 @@ export const spawnItem =(uuid, payload) => {
     console.error(error.message);
     return { status: 'error', message: '서버 오류가 발생했습니다' };
   }
+};
+
+export const earnItem = (uuid, payload) => {
+  console.log('아이템 획득 로직 검증');
+  const itemTable = assets.items;
+  const findById = itemTable.data.find((index) => index.id === payload.id);
+  if (!findById) {
+    return {
+      status: 'error',
+      message: '습득한 아이템에 대한 정보를 찾을 수 없습니다',
+    };
+  }
+  if (findById.score != payload.score) {
+    return {
+      status: 'error',
+      message: '습득한 아이템의 점수가 올바르지 않습니다',
+    };
+  }
+  return { status: 'success', message: '정상적인 아이템 획득입니다' };
 };
