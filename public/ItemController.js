@@ -26,7 +26,6 @@ class ItemController {
     try {
       const response = await fetch('/item_unlock');
       this.itemUnlockTable = await response.json();
-      console.log('아이템 해금 테이블 가져오기 성공');
     } catch (err) {
       console.error('아이템 해금 테이블 가져오기 실패');
     }

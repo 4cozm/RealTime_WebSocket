@@ -21,19 +21,13 @@ class Score {
     try {
       const response = await fetch('/item');
       this.itemTable = await response.json();
-      console.log('아이템 테이블 가져오기 성공');
-    } catch (err) {
-      console.error('아이템 테이블 가져오기 실패');
-    }
+    } catch (err) {}
   }
   async fetchStageInfo() {
     try {
       const response = await fetch('/stage');
       this.stageInfo = await response.json();
       this.currentScorePersecond = this.stageInfo.data[0].scorePerSecond;
-      console.log(
-        '스테이지 데이터 가져오기 성공:' + this.stageInfo.data.length
-      );
     } catch (err) {
       console.error('스테이지 데이터 가져오기 실패');
     }
@@ -46,7 +40,6 @@ class Score {
       this.stageInfo.data[this.currentStageIndex].score + 100; //1단계->2단계 기준
     //1. 현재 스테이지의 최대 점수를 넘었는지 확인
     if (this.score >= nextStageScore && this.stageChange) {
-      console.log('스테이지 변경 시작!');
       this.stageChange = false;
       //2. 다음 스테이지의 존재여부 확인
       if (this.currentStageIndex < this.stageInfo.data.length - 1) {
@@ -58,14 +51,11 @@ class Score {
         this.itemController.updateStage(
           this.stageInfo.data[this.currentStageIndex + 1].id
         );
-        console.log(
-          '스테이지 이동함, 현재 초당 점수 배율 = ' + this.currentScorePersecond
-        );
         //5. 서버에 이벤트 전송
         sendEvent(11, {
           currentStage: this.stageInfo.data[this.currentStageIndex - 1].id,
           targetStage: this.stageInfo.data[this.currentStageIndex].id,
-          score:this.score,
+          score: this.score,
         });
         this.stageChange = true;
       }
@@ -75,7 +65,7 @@ class Score {
   getItem(itemId) {
     const earnItem = this.itemTable.data.find((index) => index.id == itemId);
     this.score += earnItem.score;
-    sendEvent(21,{id:itemId,score:earnItem.score});
+    sendEvent(21, { id: itemId, score: earnItem.score });
   }
 
   reset() {
@@ -86,6 +76,7 @@ class Score {
     const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
     if (this.score > highScore) {
       localStorage.setItem(this.HIGH_SCORE_KEY, Math.floor(this.score));
+      sendEvent(4, { score: Math.floor(this.score)}); //신기록 달성시, 점수정보를 전달
     }
   }
 

@@ -1,5 +1,11 @@
 import { moveStageHandler } from './stage.handler.js';
-import { spawnItem, gameEnd, gameStart, earnItem } from './game.handler.js';
+import {
+  spawnItem,
+  gameEnd,
+  gameStart,
+  earnItem,
+  highScore,
+} from './game.handler.js';
 
 const handlerMappings = {
   2: gameStart,
@@ -7,6 +13,7 @@ const handlerMappings = {
   11: moveStageHandler,
   20: spawnItem,
   21: earnItem,
+  4: highScore,
 };
 
 export default handlerMappings;

@@ -72,7 +72,6 @@ export const spawnItem = (uuid, payload) => {
 };
 
 export const earnItem = (uuid, payload) => {
-  console.log('아이템 획득 로직 검증');
   const itemTable = assets.items;
   const findById = itemTable.data.find((index) => index.id === payload.id);
   if (!findById) {
@@ -90,3 +89,8 @@ export const earnItem = (uuid, payload) => {
   setItems(uuid, findById.id, findById.score);
   return { status: 'success', message: '정상적인 아이템 획득입니다' };
 };
+
+
+export const highScore = (uuid,payload)=>{
+  return {broadcast:"true",payload:`${uuid}유저가 신기록 달성!! : ${payload.score}`}
+}
