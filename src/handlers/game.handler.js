@@ -1,9 +1,11 @@
 import { getGameAssets } from '../init/assets.js';
 import { clearStage, getStage, setStage } from '../models/stage.model.js';
+import { clearItems, getItems, setItems } from '../models/item.model.js';
 import { assets } from '../app.js';
 export const gameStart = (uuid, payload) => {
   const { stages } = getGameAssets();
   clearStage(uuid);
+  clearItems(uuid);
   setStage(uuid, stages.data[0].id, payload.timestamp);
   console.log('Stage:', getStage(uuid));
 
@@ -14,6 +16,7 @@ export const gameEnd = (uuid, payload) => {
   // 클라이언트에서 받은 게임 종료 시 타임스탬프와 총 점수
   const { timestamp: gameEndTime, score } = payload;
   const stages = getStage(uuid);
+  const items = getItems(uuid);
 
   if (!stages.length) {
     return { status: 'fail', message: 'No stages found for user' };
@@ -84,5 +87,6 @@ export const earnItem = (uuid, payload) => {
       message: '습득한 아이템의 점수가 올바르지 않습니다',
     };
   }
+  setItems(uuid, findById.id, findById.score);
   return { status: 'success', message: '정상적인 아이템 획득입니다' };
 };

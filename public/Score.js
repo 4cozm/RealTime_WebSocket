@@ -65,6 +65,7 @@ class Score {
         sendEvent(11, {
           currentStage: this.stageInfo.data[this.currentStageIndex - 1].id,
           targetStage: this.stageInfo.data[this.currentStageIndex].id,
+          score:this.score,
         });
         this.stageChange = true;
       }

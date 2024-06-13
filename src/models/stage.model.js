@@ -1,5 +1,6 @@
 const stages = {};
 
+
 export const createStage = (uuid) => {
   stages[uuid] = []; // 초기 스테이지 배열 생성
 };
