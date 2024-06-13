@@ -2,6 +2,7 @@ import { getUsers, removeUser } from '../models/user.model.js';
 import { CLIENT_VERSION } from '../constants.js';
 import handlerMappings from './handlerMapping.js';
 import { createStage } from '../models/stage.model.js';
+import { getScore, setScore } from '../models/highScore.model.js';
 
 export const handleConnection = (socket, userUUID) => {
   console.log(`New user connected: ${userUUID} with socket ID ${socket.id}`);
@@ -10,7 +11,7 @@ export const handleConnection = (socket, userUUID) => {
   // 스테이지 빈 배열 생성
   createStage(userUUID);
 
-  socket.emit('connection', { uuid: userUUID });
+  socket.emit('connection', { uuid: userUUID , highScore:getScore()});
 };
 
 export const handleDisconnect = (socket, uuid) => {
@@ -39,3 +40,13 @@ export const handleEvent = (io, socket, data) => {
   socket.emit('response', response);
 };
  
+export const handleHighScore = (io,data) =>{
+  console.log("최고점수 받음 데이터 반영!");
+  console.log(data);
+  console.log(data.score , getScore()+ "잘나오나용");
+    if (data.score > getScore()) {
+        setScore(data.score);
+        console.log("모든 클라에게 새 점수 보내기")
+        io.emit('highScore', { highScore:data.score });
+    }
+}

@@ -110,7 +110,9 @@ function createSprites() {
 
   score = new Score(ctx, scaleRatio,itemController);
 }
-
+export const getScoreInstance =()=>{
+  return score;
+}
 
 function getScaleRatio() {
   const screenHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);

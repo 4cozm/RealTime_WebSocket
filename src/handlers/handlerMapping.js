@@ -12,8 +12,7 @@ const handlerMappings = {
   3: gameEnd,
   11: moveStageHandler,
   20: spawnItem,
-  21: earnItem,
-  4: highScore,
+  21: earnItem
 };
 
 export default handlerMappings;

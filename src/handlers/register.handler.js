@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { addUser } from '../models/user.model.js';
-import { handleConnection, handleDisconnect, handleEvent } from './helper.js';
+import { handleHighScore,handleConnection, handleDisconnect, handleEvent } from './helper.js';
+
 
 const registerHandler = (io) => {
   io.on('connection', (socket) => {
@@ -15,6 +16,8 @@ const registerHandler = (io) => {
     socket.on('event', (data) => handleEvent(io, socket, data));
     // 접속 해제시 이벤트 처리
     socket.on('disconnect', () => handleDisconnect(socket, userUUID));
+    // 신기록 달성시 이벤트 처리
+    socket.on('newHighScore', (data) => handleHighScore(io,data));
   });
 };
 

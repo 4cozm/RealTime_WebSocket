@@ -1,4 +1,4 @@
-import { sendEvent } from './Socket.js';
+import { sendHighScore,sendEvent } from './Socket.js';
 
 class Score {
   score = 0;
@@ -76,15 +76,19 @@ class Score {
     const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
     if (this.score > highScore) {
       localStorage.setItem(this.HIGH_SCORE_KEY, Math.floor(this.score));
-      sendEvent(4, { score: Math.floor(this.score)}); //신기록 달성시, 점수정보를 전달
+      sendHighScore(Math.floor(this.score))//신기록 달성시, 점수정보를 전달
     }
   }
+  updateHighScore(score){
+    localStorage.setItem(this.HIGH_SCORE_KEY, Math.floor(score))
+  }
+
 
   getScore() {
     return this.score;
   }
 
-  draw() {
+  draw() {//게임이 재시작 될때 호출되는 함수
     const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
     const y = 20 * this.scaleRatio;
 

@@ -1,15 +1,17 @@
 import { getGameAssets } from '../init/assets.js';
 import { clearStage, getStage, setStage } from '../models/stage.model.js';
 import { clearItems, getItems, setItems } from '../models/item.model.js';
+import {getScore} from '../models/highScore.model.js'
 import { assets } from '../app.js';
 export const gameStart = (uuid, payload) => {
   const { stages } = getGameAssets();
   clearStage(uuid);
   clearItems(uuid);
   setStage(uuid, stages.data[0].id, payload.timestamp);
+  
   console.log('Stage:', getStage(uuid));
 
-  return { status: 'game start success' };
+  return { status: 'game start success',highScore:getScore() };
 };
 
 export const gameEnd = (uuid, payload) => {
@@ -94,3 +96,4 @@ export const earnItem = (uuid, payload) => {
 export const highScore = (uuid,payload)=>{
   return {broadcast:"true",payload:`${uuid}유저가 신기록 달성!! : ${payload.score}`}
 }
+
