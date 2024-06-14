@@ -41,12 +41,8 @@ export const handleEvent = (io, socket, data) => {
 };
  
 export const handleHighScore = (io,data) =>{
-  console.log("최고점수 받음 데이터 반영!");
-  console.log(data);
-  console.log(data.score , getScore()+ "잘나오나용");
     if (data.score > getScore()) {
         setScore(data.score);
-        console.log("모든 클라에게 새 점수 보내기")
         io.emit('highScore', { highScore:data.score });
     }
 }

@@ -1,4 +1,4 @@
-//유저의 최고점수를 관리하는 함수
+//유저의 최고점수를 관리하는 파일
 const highScore = {score:10}; //임시로 10 부여
 
 export const setScore = (score)=>{

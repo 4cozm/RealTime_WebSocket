@@ -51,7 +51,6 @@ export const moveStageHandler = (userId, payload) => {
       payload.score <= nextStage.score + tolerance
     )
   ) {
-    // 다음 스테이지의 기준 점수가 유저가 보낸 데이터의 점수 이상인가?
     return {
       status: 'fail',
       message: '스테이지를 이동할만큼 점수를 가지고 있지 않습니다',
