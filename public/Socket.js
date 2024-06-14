@@ -1,6 +1,6 @@
 import { CLIENT_VERSION } from './Constants.js';
 import { getScoreInstance } from './index.js';
-const socket = io('http://43.201.255.34 :3000', {
+const socket = io('http://43.201.255.34:3000', {
   query: {
     clientVersion: CLIENT_VERSION,
   },
