@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 initSocket(server);
 
-app.get('/:fileName', async (req, res) => {
+app.get('/assets/:fileName', async (req, res) => {
   try {
     const data = await readFileAsync(`${req.params.fileName}.json`);
     res.json(data);

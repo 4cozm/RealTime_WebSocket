@@ -24,7 +24,7 @@ class ItemController {
 
   async fetchItemUnlockInfo() {
     try {
-      const response = await fetch('/item_unlock');
+      const response = await fetch('/assets/item_unlock');
       this.itemUnlockTable = await response.json();
     } catch (err) {
       console.error('아이템 해금 테이블 가져오기 실패');

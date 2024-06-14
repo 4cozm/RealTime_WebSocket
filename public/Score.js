@@ -19,13 +19,13 @@ class Score {
   }
   async fetchItemInfo() {
     try {
-      const response = await fetch('/item');
+      const response = await fetch('/assets/item');
       this.itemTable = await response.json();
     } catch (err) {}
   }
   async fetchStageInfo() {
     try {
-      const response = await fetch('/stage');
+      const response = await fetch('/assets/stage');
       this.stageInfo = await response.json();
       this.currentScorePersecond = this.stageInfo.data[0].scorePerSecond;
     } catch (err) {
