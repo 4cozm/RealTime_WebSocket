@@ -16,7 +16,8 @@ class CactiController {
         this.scaleRatio = scaleRatio;
         this.speed = speed;
 
-        this.setNextCactusTime();
+        
+                            this.setNextCactusTime();
     }
 
     setNextCactusTime() {
