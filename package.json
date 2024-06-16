@@ -2,12 +2,12 @@
   "name": "realtimewebsocket",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
   "type": "module",
   "scripts": {
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
