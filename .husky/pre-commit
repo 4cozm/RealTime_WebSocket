@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# lint-staged가 실행될 명령어를 정의합니다.
+npx lint-staged

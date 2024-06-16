@@ -111,7 +111,7 @@ function createSprites() {
   score = new Score(ctx, scaleRatio,itemController);
 }
 export const getScoreInstance =()=>{
-  return score;
+  return  score;
 }
 
 function getScaleRatio() {
