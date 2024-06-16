@@ -1,4 +1,5 @@
 # 리얼타임 웹소켓 게임 서버 구현
+[바로가기 링크](http://sidner.shop:3000/)
 
 ![image](https://github.com/4cozm/RealTime_WebSocket/assets/49065386/4722ed3b-0c97-466a-a64b-45c0aa88ff9d)
 
