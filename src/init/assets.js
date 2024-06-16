@@ -10,8 +10,11 @@ let gameAssets = {}; // 전역함수로 선언
 
 export const readFileAsync = (filename) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(path.join(basePath, filename), 'utf8', (err, data) => {
+    const filePath = path.join(basePath, filename);
+    console.log(`Reading file: ${filePath}`);
+    fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
+        console.error(`Error reading file: ${filePath}`, err);
         reject(err);
         return;
       }
